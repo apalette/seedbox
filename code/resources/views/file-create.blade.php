@@ -115,6 +115,7 @@
 			$('.form-block input, .form-block select').removeAttr('required').removeAttr('pattern');
 			$('.form-block-type-'+t).removeClass('hide');
 			$('.form-block-type-'+t+' input, .form-block-type-'+t+' select').prop('required', true).prop('pattern','.*[^ ].*');
+			$('#season-poster').removeAttr('required');
 			if (t == 'tv') {
 				$('#tv_item_id').trigger('change');
 			}
