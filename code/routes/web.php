@@ -13,3 +13,5 @@
 Auth::routes();
 
 Route::get('/', 'SeedboxController@index')->name('home');
+Route::get('/file-create', 'SeedboxController@fileCreate')->name('file-create');
+Route::post('/file-create', 'SeedboxController@fileCreateSave')->name('file-create');

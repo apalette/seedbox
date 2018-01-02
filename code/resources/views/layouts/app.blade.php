@@ -44,5 +44,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('app/js/main.js') }}"></script>
+    @yield('js')
 </body>
 </html>
