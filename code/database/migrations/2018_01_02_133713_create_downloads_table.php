@@ -15,7 +15,7 @@ class CreateDownloadsTable extends Migration
     {
     	Schema::create('downloads', function (Blueprint $table) {
             $table->increments('id');
-			$table->string('url');
+			$table->text('url');
 			$table->string('destination');
 			$table->tinyInteger('upload_status')->default(0);
 			$table->tinyInteger('sync_status')->default(0);
