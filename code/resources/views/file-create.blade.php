@@ -4,8 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">New file</div>
+        	<div class="panel panel-default">
+                <div class="panel-heading"><a class="btn btn-default" href="{{url('/')}}"><span class="glyphicon glyphicon-home"></span></a>&nbsp;&nbsp; New file</div>
 
                 <div class="panel-body">
                 	@if ($errors->any())
@@ -37,12 +37,17 @@
 					  		<div class="form-group">
 					    		<label for="tv_item_id">Name</label>
 					    		<select class="form-control" id="tv_item_id" name="tvshow_new">
-						    		<!--<option value="" selected disabled>Please select</option>
-						    		<option value="1">The Mist</option>
-						    		<option value="2">Zoo</option>
-						    		<optgroup label="Or ...">-->
+					    			@if ($tvshows->count() > 0)
+					    			<option value="" selected disabled>Please select</option>
+					    			@foreach ($tvshows as $tvshow)
+						    		<option value="{{$tvshow->id}}"{{(old('tvshow_new') == $tvshow->id) ? ' selected' : ''}}>{{$tvshow->name}}</option>
+						    		@endforeach
+						    		<optgroup label="Or ...">
 						    			<option value="0"{{(old('tvshow_new') == 0) ? ' selected' : ''}}>Create a new TV show</option>
-						    		<!--</optgroup>-->
+						    		</optgroup>
+					    			@else
+						    		<option value="0"{{(old('tvshow_new') == 0) ? ' selected' : ''}}>Create a new TV show</option>
+						    		@endif
 						    	</select>
 						    </div>
 						    <div class="form-group hide{{ $errors->has('tvshow_name') ? ' has-error' : '' }}" id="tv_item_name_block">

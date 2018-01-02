@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container">
+	<div class="text-right">
+		<a class="btn btn-primary" href="{{url('/file-create')}}">Add a file</a>
+	</div>
 	@if ($recents->count() == 0)
 	<h2>No file</h2>
 	@else

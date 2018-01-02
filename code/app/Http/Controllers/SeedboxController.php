@@ -42,7 +42,9 @@ class SeedboxController extends Controller
      */
     public function fileCreate()
     {
-        return view('file-create');
+        return view('file-create', [
+        	'tvshows' => Tvshow::orderBy('name', 'ASC')->get()
+        ]);
     }
 	
 	/**
@@ -60,7 +62,7 @@ class SeedboxController extends Controller
 		]);
 		
 		// Save Tvshow
-		if ($request->tv_item_id == 0) {
+		if ($request->tvshow_new == 0) {
 			$this->validate($request, [
 				'tvshow_name' => 'required'
 			]);
@@ -75,7 +77,10 @@ class SeedboxController extends Controller
 			}
 		}
 		else {
-			//$tvshow
+			$tvshow = Tvshow::where('id', $request->tvshow_new)->first();
+			if (! $tvshow) {
+				return redirect()->back()->withErrors(['The tv show doesn\'t exist'])->withInput();
+			}
 		}
 		
 		// Save Season
