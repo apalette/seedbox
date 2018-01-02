@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Image;
 
 use App\Models\Tvshow;
 use App\Models\Season;
@@ -91,6 +92,25 @@ class SeedboxController extends Controller
 		}
 		else {
 			$season = $tvshow->seasons()->where('number', $request->season_number)->first();
+		}
+		
+		// Save Season Picture
+		if ($season->poster == 0) {
+			if ($request->season_poster && (filter_var($request->season_poster, FILTER_VALIDATE_URL) !== false)) {
+				try 
+				{
+				    $image = Image::make($request->season_poster);
+					$image->fit(182, 268);
+					if ($image->save(base_path().'/public/app/images/posters/series/'.$tvshow->tag.'-'.str_pad($season->number, 2, '0', STR_PAD_LEFT).'.jpg', 80)) {
+						$season->poster = 1;
+						$season->save();
+					}
+					
+				}
+				catch(Exception $e)
+				{
+				}
+			}
 		}
 		
 		// Check if episode already exists

@@ -12,7 +12,11 @@
 	<ul class="list-unstyled list-inline">
 		@foreach ($recents as $recent)
 		<li class="app-item">
+			@if ($recent->season->poster == 0)
 			<div class="line no-poster"><span class="glyphicon glyphicon-film"></span></div>
+			@else
+			<div class="line"><img src="{{url('app/images/posters/series/')}}/{{$recent->season->tvshow->tag}}-{{str_pad($recent->season->number, 2, '0', STR_PAD_LEFT)}}.jpg" class="img-responsive" /></div>
+			@endif
 			<h3 class="line">{{$recent->season->tvshow->name}}</h3>
 			<h4 class="line">S{{str_pad($recent->season->number, 2, '0', STR_PAD_LEFT)}}E{{str_pad($recent->number, 2, '0', STR_PAD_LEFT)}}</h4>
 			<div class="small line">By username</div>
@@ -81,7 +85,11 @@
     	@endphp
     	@if ($episode)
 		<li class="app-item">
+			@if ($season->poster == 0)
 			<div class="line no-poster"><span class="glyphicon glyphicon-film"></span></div>
+			@else
+			<div class="line"><img src="{{url('app/images/posters/series/')}}/{{$tvshow->tag}}-{{str_pad($season->number, 2, '0', STR_PAD_LEFT)}}.jpg" class="img-responsive" /></div>
+			@endif
 			<h3 class="line">{{$tvshow->name}}</h3>
 			<h4 class="line">S{{str_pad($season->number, 2, '0', STR_PAD_LEFT)}}E{{str_pad($episode->number, 2, '0', STR_PAD_LEFT)}}</h4>
 			<div class="small line">By username</div>
