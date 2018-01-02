@@ -29,8 +29,10 @@ class SeedboxController extends Controller
      */
     public function index()
     {
-        //return view('home');
-        return redirect('/file-create');
+        return view('home', [
+        	'recents' => Episode::orderBy('created_at', 'DESC')->limit(10)->get(),
+        	'tvshows' => Tvshow::orderBy('created_at', 'DESC')->limit(10)->get()
+        ]);
     }
 	
 	/**

@@ -13,4 +13,12 @@ class Season extends Model
     {
         return $this->hasMany('App\Models\Episode');
     }
+	
+	/**
+     * Get the tvshow that owns the season.
+     */
+    public function tvshow()
+    {
+        return $this->belongsTo('App\Models\Tvshow');
+    }
 }
