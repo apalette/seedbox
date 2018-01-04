@@ -13,4 +13,12 @@ class Episode extends Model
     {
         return $this->belongsTo('App\Models\Season');
     }
+	
+	 /**
+     * Get the download record associated with the episode.
+     */
+    public function download()
+    {
+        return $this->belongsTo('App\Models\Download');
+    }
 }

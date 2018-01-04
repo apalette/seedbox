@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Image;
+use Auth;
 
 use App\Models\Tvshow;
 use App\Models\Season;
@@ -122,6 +123,7 @@ class SeedboxController extends Controller
 		$download = new Download;
 		$download->url = $request->download_url;
 		$download->destination = 'series/'.$tvshow->tag.'/season'.str_pad($season->number, 2, '0', STR_PAD_LEFT).'/'.str_pad($request->episode_number, 2, '0', STR_PAD_LEFT);
+		$download->user_id = Auth::user()->id;
 		$download->save();
 		
 		// Save Episode

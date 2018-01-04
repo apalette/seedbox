@@ -19,7 +19,7 @@
 			@endif
 			<h3 class="line">{{$recent->season->tvshow->name}}</h3>
 			<h4 class="line">S{{str_pad($recent->season->number, 2, '0', STR_PAD_LEFT)}}E{{str_pad($recent->number, 2, '0', STR_PAD_LEFT)}}</h4>
-			<div class="small line">By username</div>
+			<div class="small line">By {{$recent->download->user->first_name}}</div>
 			<div class="line"><span class="label label-danger">TV show</span> <span class="label label-warning">Pending</span></div>
 		</li>
 		@if (1 == 2)
@@ -92,7 +92,7 @@
 			@endif
 			<h3 class="line">{{$tvshow->name}}</h3>
 			<h4 class="line">S{{str_pad($season->number, 2, '0', STR_PAD_LEFT)}}E{{str_pad($episode->number, 2, '0', STR_PAD_LEFT)}}</h4>
-			<div class="small line">By username</div>
+			<div class="small line">By {{$episode->download->user->first_name}}</div>
 			<div class="line"><span class="label label-danger">TV show</span> <span class="label label-warning">Pending</span></div>
 		</li>
 		@endif

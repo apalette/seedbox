@@ -17,6 +17,8 @@ class CreateDownloadsTable extends Migration
             $table->increments('id');
 			$table->text('url');
 			$table->string('destination');
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('users');
 			$table->tinyInteger('upload_status')->default(0);
 			$table->tinyInteger('sync_status')->default(0);
             $table->timestamps();
