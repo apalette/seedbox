@@ -20,7 +20,16 @@
 			<h3 class="line">{{$recent->season->tvshow->name}}</h3>
 			<h4 class="line">S{{str_pad($recent->season->number, 2, '0', STR_PAD_LEFT)}}E{{str_pad($recent->number, 2, '0', STR_PAD_LEFT)}}</h4>
 			<div class="small line">By {{$recent->download->user->first_name}}</div>
-			<div class="line"><span class="label label-danger">TV show</span> <span class="label label-warning">Pending</span></div>
+			<div class="line">
+				<span class="label label-danger">TV show</span>&nbsp;
+				@if ($recent->download->upload_status == 0)
+				<span class="label label-warning">Pending</span>
+				@elseif ($recent->download->upload_status == 1)
+				<span class="label label-info">Downloading...</span>
+				@elseif ($recent->download->upload_status == 2)
+				<span class="label label-success">Available</span>
+				@endif
+			</div>
 		</li>
 		@if (1 == 2)
 		<li class="app-item">
@@ -93,11 +102,28 @@
 			<h3 class="line">{{$tvshow->name}}</h3>
 			<h4 class="line">S{{str_pad($season->number, 2, '0', STR_PAD_LEFT)}}E{{str_pad($episode->number, 2, '0', STR_PAD_LEFT)}}</h4>
 			<div class="small line">By {{$episode->download->user->first_name}}</div>
-			<div class="line"><span class="label label-danger">TV show</span> <span class="label label-warning">Pending</span></div>
+			<div class="line">
+				<span class="label label-danger">TV show</span>&nbsp;
+				@if ($episode->download->upload_status == 0)
+				<span class="label label-warning">Pending</span>
+				@elseif ($episode->download->upload_status == 1)
+				<span class="label label-info">Downloading...</span>
+				@elseif ($episode->download->upload_status == 2)
+				<span class="label label-success">Available</span>
+				@endif
+			</div>
 		</li>
 		@endif
 		@endforeach
 	</ul>
 	@endif
 </div>
+@endsection
+
+@section('js')
+<script>
+setInterval(function() {
+	window.location.reload();
+}, 30000); 	
+</script>
 @endsection

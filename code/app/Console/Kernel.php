@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-    	\App\Console\Commands\CreateUser::class
+    	\App\Console\Commands\CreateUser::class,
+    	\App\Console\Commands\ProcessDownload::class
     ];
 
     /**
@@ -24,8 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('download:process')->everyMinute();
     }
 
     /**
