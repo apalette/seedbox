@@ -120,9 +120,10 @@ class SeedboxController extends Controller
 		}
 		
 		// Save download
+		$season_path = 'season'.str_pad($season->number, 2, '0', STR_PAD_LEFT);
 		$download = new Download;
 		$download->url = $request->download_url;
-		$download->destination = 'series/'.$tvshow->tag.'/season'.str_pad($season->number, 2, '0', STR_PAD_LEFT).'/'.str_pad($request->episode_number, 2, '0', STR_PAD_LEFT);
+		$download->destination = 'series/'.$tvshow->tag.'/'.$season_path.'/'.$tvshow->tag.'-'.$season_path.'-'.str_pad($request->episode_number, 2, '0', STR_PAD_LEFT);
 		$download->user_id = Auth::user()->id;
 		$download->save();
 		
