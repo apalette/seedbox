@@ -58,7 +58,7 @@ class SeedboxController extends Controller
 	{
 		$this->validate($request, [
 			'season_number' => 'required|integer|min:1|max:50',
-			'episode_number' => 'required|integer|min:1|max:50',
+			'episode_number' => 'required|integer|min:1|max:150',
 			'episode_name' => 'required',
 			'download_url' => 'required|url'
 		]);

@@ -71,7 +71,7 @@
 										<label for="episode-num">Episode</label>
 										<div class="input-group">
 											<span class="input-group-addon"><i class="small">Num :</i></span>
-											<input type="number" name="episode_number" class="form-control span8" id="episode-num" min="1" max="50" placeholder="Enter episode number" value="{{old('episode_number')}}">
+											<input type="number" name="episode_number" class="form-control span8" id="episode-num" min="1" max="150" placeholder="Enter episode number" value="{{old('episode_number')}}">
 										</div>
 									</div>
 									<div class="form-group{{ $errors->has('episode_name') ? ' has-error' : '' }}">
