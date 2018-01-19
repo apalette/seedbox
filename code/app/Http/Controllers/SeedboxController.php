@@ -10,6 +10,7 @@ use App\Models\Tvshow;
 use App\Models\Season;
 use App\Models\Episode;
 use App\Models\Download;
+use App\Models\Movie;
 
 class SeedboxController extends Controller
 
@@ -48,6 +49,54 @@ class SeedboxController extends Controller
         	'tvshows' => Tvshow::orderBy('name', 'ASC')->get()
         ]);
     }
+	
+	/**
+     * Save a movie.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function movieCreateSave(Request $request, $type)
+	{
+		$this->validate($request, [
+			'movie_name' => 'required',
+			'download_url' => 'required|url'
+		]);
+		
+		// Create Movie
+		$tag = str_slug($request->movie_name);
+		$movie = new Movie;
+		$movie->type = $type;
+		$movie->name = $request->movie_name;
+		
+		// Save Movie Picture
+		if ($request->movie_poster && (filter_var($request->movie_poster, FILTER_VALIDATE_URL) !== false)) {
+			try 
+			{
+			    $image = Image::make($request->movie_poster);
+				$image->fit(182, 268);
+				if ($image->save(base_path().'/public/app/images/posters/movies/'.$tag.'.jpg', 80)) {
+					$movie->poster = 1;
+				}
+				
+			}
+			catch(Exception $e)
+			{
+			}
+		}
+		
+		// Save download
+		$download = new Download;
+		$download->url = $request->download_url;
+		$download->destination = 'films/'.$tag;
+		$download->user_id = Auth::user()->id;
+		$download->save();
+		
+		// Save Movie
+		$movie->download_id = $download->id;
+		$movie->save();
+		
+		return redirect()->back()->with('message', 'The movie has been saved!');
+	}
 	
 	/**
      * Save a tv show.
@@ -149,10 +198,12 @@ class SeedboxController extends Controller
 		 * 2 = tv show
 		 */
     	$this->validate($request, [
-			'category' => 'required|in:2'
+			'category' => 'required|in:1,2'
 		]);
 		
     	switch ($request->category) {
+    		case 1:
+				return $this->movieCreateSave($request, 1);
 			case 2:
 				return $this->tvShowCreateSave($request);
     	}

@@ -27,8 +27,8 @@
 						<div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
 					    	<label for="item_type">Category</label>
 					    	<select class="form-control" id="item_type" name="category" required>
-					    		<!--<option value="" selected disabled>Please select</option>-->
-					    		<!--<option value="1" data-type="movie">Movie</option>-->
+					    		<option value="" selected disabled>Please select</option>
+					    		<option value="1" data-type="movie">Movie</option>
 					    		<option value="2" data-type="tv"{{(old('category') == 2) ? ' selected' : ''}}>TV show</option>
 					    	</select>
 						</div>
@@ -84,11 +84,11 @@
 							<h3>Movie informations</h3>
 						    <div class="form-group">
 						    	<label for="movie_item_name">Name</label>
-						    	<input type="text" class="form-control" id="movie_item_name" placeholder="Enter movie name" />
+						    	<input type="text" class="form-control" id="movie_item_name" name="movie_name" placeholder="Enter movie name" value="{{old('movie_name')}}" />
 					    	</div>
 							<div class="form-group">
 								<label for="movie_item_poster">Poster url</label>
-						    	<input type="url" class="form-control" id="movie_item_poster" placeholder="Enter movie poster url">
+						    	<input type="url" class="form-control" id="movie_item_poster" placeholder="Enter movie poster url" name="movie_poster" value="{{old('movie_poster')}}">
 							</div>
 						</div>
 						<div class="form-group{{ $errors->has('download_url') ? ' has-error' : '' }}">
