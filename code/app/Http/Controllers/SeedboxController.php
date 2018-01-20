@@ -32,9 +32,11 @@ class SeedboxController extends Controller
      */
     public function index()
     {
-        return view('home', [
-        	'recents' => Episode::orderBy('created_at', 'DESC')->limit(10)->get(),
-        	'tvshows' => Tvshow::orderBy('created_at', 'DESC')->limit(10)->get()
+    	return view('home', [
+        	'downloads' => Download::orderBy('created_at', 'DESC')->limit(12)->get(),
+        	'tvshows' => Tvshow::orderBy('created_at', 'DESC')->limit(12)->get(),
+        	'movies' => Movie::where('type', 1)->orderBy('created_at', 'DESC')->limit(12)->get(),
+        	'cartoons' => Movie::where('type', 3)->orderBy('created_at', 'DESC')->limit(12)->get()
         ]);
     }
 	
@@ -62,6 +64,8 @@ class SeedboxController extends Controller
 			'download_url' => 'required|url'
 		]);
 		
+		$path = ($type == 1) ? 'films' : 'anime';
+		
 		// Create Movie
 		$tag = str_slug($request->movie_name);
 		$movie = new Movie;
@@ -74,7 +78,7 @@ class SeedboxController extends Controller
 			{
 			    $image = Image::make($request->movie_poster);
 				$image->fit(182, 268);
-				if ($image->save(base_path().'/public/app/images/posters/movies/'.$tag.'.jpg', 80)) {
+				if ($image->save(base_path().'/public/app/images/posters/'.$path.'/'.$tag.'.jpg', 80)) {
 					$movie->poster = 1;
 				}
 				
@@ -87,7 +91,7 @@ class SeedboxController extends Controller
 		// Save download
 		$download = new Download;
 		$download->url = $request->download_url;
-		$download->destination = 'films/'.$tag;
+		$download->destination = $path.'/'.$tag;
 		$download->user_id = Auth::user()->id;
 		$download->save();
 		
@@ -95,7 +99,7 @@ class SeedboxController extends Controller
 		$movie->download_id = $download->id;
 		$movie->save();
 		
-		return redirect()->back()->with('message', 'The movie has been saved!');
+		return redirect()->back()->with('message', 'The '.($type == 1 ? 'movie' : 'cartoon').' has been saved!');
 	}
 	
 	/**
@@ -198,7 +202,7 @@ class SeedboxController extends Controller
 		 * 2 = tv show
 		 */
     	$this->validate($request, [
-			'category' => 'required|in:1,2'
+			'category' => 'required|in:1,2,3'
 		]);
 		
     	switch ($request->category) {
@@ -206,6 +210,8 @@ class SeedboxController extends Controller
 				return $this->movieCreateSave($request, 1);
 			case 2:
 				return $this->tvShowCreateSave($request);
+			case 3:
+				return $this->movieCreateSave($request, 3);
     	}
     }
 }

@@ -28,7 +28,8 @@
 					    	<label for="item_type">Category</label>
 					    	<select class="form-control" id="item_type" name="category" required>
 					    		<option value="" selected disabled>Please select</option>
-					    		<option value="1" data-type="movie">Movie</option>
+					    		<option value="1" data-type="movie" data-title="Movie informations"{{(old('category') == 1) ? ' selected' : ''}}>Movie</option>
+					    		<option value="3" data-type="movie" data-title="Cartoon informations"{{(old('category') == 3) ? ' selected' : ''}}>Cartoon</option>
 					    		<option value="2" data-type="tv"{{(old('category') == 2) ? ' selected' : ''}}>TV show</option>
 					    	</select>
 						</div>
@@ -111,6 +112,12 @@
 	$(document).ready(function(){
 		$('#item_type').on('change', function(){
 			var t = $(this).find('option:selected').data('type');
+			var title = $(this).find('option:selected').data('title');
+			
+			if (typeof title != 'undefined') {
+				$('.form-block-type-'+t+' h3').html(title);
+			}
+			
 			$('.form-block').addClass('hide');
 			$('.form-block input, .form-block select').removeAttr('required').removeAttr('pattern');
 			$('.form-block-type-'+t).removeClass('hide');

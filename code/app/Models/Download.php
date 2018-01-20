@@ -13,4 +13,20 @@ class Download extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+	
+	/**
+     * Get the tv-show episode that owns the donwload.
+     */
+    public function episode()
+    {
+        return $this->hasOne('App\Models\Episode');
+    }
+	
+	/**
+     * Get the movie that owns the donwload.
+     */
+    public function movie()
+    {
+        return $this->hasOne('App\Models\Movie');
+    }
 }
